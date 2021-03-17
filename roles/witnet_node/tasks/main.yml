@@ -1,0 +1,40 @@
+    - name: Install prereq
+      apt: name={{ item }} state=present update_cache=yes
+      with_items:
+        - software-properties-common
+        - fail2ban
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - python3-pip
+
+    - name: Add docker key
+      apt_key:
+        url: "https://download.docker.com/linux/ubuntu/gpg"
+        state: present
+
+    - name: Add repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+        state: present
+
+    - name: Install docker
+      apt: name={{ item }} state=present update_cache=yes
+      with_items:
+        - docker-ce
+
+    - name: install python Docker SDK
+      pip:
+        name: docker
+
+    - name: Run docker
+      docker_container:
+        name: witnet_node
+        image: witnet/witnet-rust
+        restart_policy: always
+        state: started
+        expose:
+        - 21337
+        volumes:
+        - ~/.witnet:/.witnet

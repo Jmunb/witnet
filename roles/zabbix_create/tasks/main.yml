@@ -1,0 +1,24 @@
+- name: Check if register zabbix already exists
+  stat:
+    path: /root/register.sh
+  register: stat_result
+
+- name: Zabbix register
+  block:
+
+    - name: Get host_name
+      shell: hostname
+      register: hst_zabbix_hostname
+
+    - name: Copy register script
+      template:
+        src: "{{ role_path }}/files/register.j2"
+        dest: /root/register.sh
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Run register script
+      shell: /root/register.sh
+
+  when: stat_result.stat.exists == False

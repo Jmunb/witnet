@@ -1,0 +1,8 @@
+---
+- hosts: all
+  gather_facts: yes
+  serial: 20
+  roles:
+    - zabbix_create
+    - witnet_node
+    - zabbix_agent

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+name={{ hst_zabbix_hostname.stdout }}
+IP={{ ansible_default_ipv4.address }}
+ZABBIX_AUTH="d0cc5f1dc4705c5f8c6a516c523930f0"
+ZABBIX_API=https://zabbix.d2combat.com/api_jsonrpc.php
+
+
+curl -s -X POST -H 'Content-Type: application/json-rpc' -d '{ "jsonrpc": "2.0", "method": "host.create",  "params": { "host": "'$name'", "interfaces": [ { "type": 1, "main": 1, "useip": 1, "ip": "'$IP'", "dns": "'$name'", "port": "10050" } ], "groups": [ { "groupid": "18" }, { "groupid": "20" } ], "templates": [ { "templateid": "10379" }, { "templateid": "10380" } ], "inventory_mode": -1 }, "auth": "'$ZABBIX_AUTH'", "id": 42 }' $ZABBIX_API

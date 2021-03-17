@@ -1,0 +1,73 @@
+---
+# roles/zabbix_agentd/tasks/main.yml
+- name: ubuntu 20.04 | install zabbix repo
+  apt:
+    deb: https://repo.zabbix.com/zabbix/5.2/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.2-1+ubuntu18.04_all.deb
+
+- name: install deps Ubuntu
+  apt:
+    name: "{{ packages }}"
+    state: present
+    update_cache: yes
+  vars:
+    packages:
+    - bc
+    - rsync
+    - jq
+    - ethtool
+    - socat
+    - smartmontools
+    - net-tools
+
+- name: ubuntu | install zabbix agent
+  apt:
+    name: zabbix-agent
+    state: present
+    update_cache: yes
+  register: zabbix_agent
+
+- name: copy zabbix-agent config
+  copy:
+    src: "{{ role_path }}/files/zabbix_agentd.conf"
+    dest: "/etc/zabbix/zabbix_agentd.conf"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: copy zabbix_user_parameters.conf file
+  copy:
+    src: "{{ role_path }}/files/zabbix_user_parameters.conf"
+    dest: /etc/zabbix/zabbix_user_parameters.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart zabbix-agent
+
+- name: copy zabbix scripts directory
+  synchronize:
+    src: "{{ role_path }}/files/scripts/"
+    dest: /etc/zabbix/scripts/
+    owner: no
+    group: no
+
+- name: fix permissions in script directory
+  file:
+    dest: /etc/zabbix/scripts
+    owner: root
+    group: root
+    mode: 0755
+    recurse: yes
+
+- name: copy sudoers.d/zabbix file
+  copy:
+    src: "{{ role_path }}/files/sudoers.d/zabbix"
+    dest: /etc/sudoers.d/zabbix
+    owner: root
+    group: root
+    mode: 0440
+    validate: /usr/sbin/visudo -cf %s
+
+
+- name: force all notified handlers to run at this point, not waiting for normal sync points
+  meta: flush_handlers

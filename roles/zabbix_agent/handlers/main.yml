@@ -1,0 +1,12 @@
+# roles/zabbix_agentd/handlers/main.yml
+- name: check zabbix-agent
+  service:
+    name: zabbix-agent
+    enabled: yes
+    state: started
+
+- name: restart zabbix-agent
+  service:
+    name: zabbix-agent
+    enabled: yes
+    state: restarted

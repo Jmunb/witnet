@@ -1,0 +1,150 @@
+{
+    "zabbix_export": {
+        "version": "5.2",
+        "date": "2021-02-19T06:56:48Z",
+        "groups": [
+            {
+                "name": "Witnet"
+            }
+        ],
+        "templates": [
+            {
+                "template": "witnet",
+                "name": "witnet",
+                "groups": [
+                    {
+                        "name": "Witnet"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "witnet"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "Accepted commits on $HOST",
+                        "key": "node.accepted_commits",
+                        "delay": "10m",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Confirmed balance on $HOST",
+                        "key": "node.balance_con",
+                        "delay": "30m",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Pending balance on $HOST",
+                        "key": "node.balance_pen",
+                        "delay": "30m",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Included blocks on $HOST",
+                        "key": "node.blocks_included",
+                        "delay": "30m",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Eligibility on $HOST",
+                        "key": "node.eligibility",
+                        "delay": "1h",
+                        "value_type": "FLOAT",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Eligibility to mine on $HOST",
+                        "key": "node.eligibility_to_mine",
+                        "delay": "1d",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Number of nodes running on $HOST",
+                        "key": "node.number",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Proposed blocks on $HOST",
+                        "key": "node.proposed_blocks",
+                        "delay": "30m",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Proposed commits on $HOST",
+                        "key": "node.proposed_commits",
+                        "delay": "30m",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Reputation on $HOST",
+                        "key": "node.reputation",
+                        "delay": "1d",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Slashed commits on $HOST",
+                        "key": "node.slashed_commits",
+                        "delay": "30m",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Synchronization progress on $HOST",
+                        "key": "node.sync",
+                        "delay": "1h",
+                        "value_type": "FLOAT",
+                        "applications": [
+                            {
+                                "name": "witnet"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
